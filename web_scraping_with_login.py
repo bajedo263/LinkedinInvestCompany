@@ -3,6 +3,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import csv
 import json
@@ -10,12 +12,12 @@ import time
 
 def login_to_linkedin(username, password):
     # Utilisez le navigateur Chrome (téléchargez le driver sur https://sites.google.com/a/chromium.org/chromedriver/)
-    driver = webdriver.Chrome(executable_path='/chemin/vers/chromedriver')
+    driver = webdriver.Chrome()
 
     # Ouvrir la page de connexion LinkedIn
     driver.get('https://www.linkedin.com/login')
 
-    # Remplir le formulaire de connexion
+    # Remplir le formulaire de connexions
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
@@ -37,12 +39,14 @@ def scrape_linkedin_jobs(driver, url):
 
 if __name__ == "__main__":
     linkedin_url = 'https://www.linkedin.com/jobs/'
-    linkedin_username = 'VotreNomUtilisateurLinkedIn'
-    linkedin_password = 'VotreMotDePasseLinkedIn'
-
+    linkedin_username = 'XXX'
+    linkedin_password = 'XXX'
+    time.sleep(5)  # Attendre quelques secondes pour permettre le chargement complet de la page
+    
     # Connexion à LinkedIn
     driver = login_to_linkedin(linkedin_username, linkedin_password)
-
+    time.sleep(5)  # Attendre quelques secondes pour permettre le chargement complet de la page
+    
     # Scraper les offres d'emploi après la connexion
     jobs_data = scrape_linkedin_jobs(driver, linkedin_url)
 
